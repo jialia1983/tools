@@ -1,0 +1,13 @@
+FROM java:1.8.0
+COPY  hw-eps-csmapp-202206281407.jar /usr/local/app/
+COPY Shanghai /etc/localtime
+RUN mkdir -p /opt/Nist/
+COPY user.keytab /nist/www/api/config/user.keytab
+COPY krb5.conf /nist/www/api/config/krb5.conf
+RUN echo "Asia/Shanghai" > /etc/timezone
+WORKDIR /usr/local/app
+CMD java -jar /usr/local/app/hw-eps-csmapp-202206281407.jar
+EXPOSE 8001
+
+docker打包命令：docker build -t nist-eps-csmapp:v1.4 .
+dockers导出命令：docker save -o nist-eps-csmapp-v1.4.tar nist-eps-csmapp:v1.4
